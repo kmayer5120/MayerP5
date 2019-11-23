@@ -3,14 +3,14 @@ let pollenReadings = null;
 
 function getCount(data) {
     const el = $("#counter");
-    let name = "Pollen Count Reading";
+    let name = "Pollen Count Reading Displayed";
     if (data) {
         if (data > 1) {
-            name = "Pollen Count Readings";
+            name = "Pollen Count Readings Displayed";
         }
         el.text(data + " " + name);
     } else {
-        el.text("No " + name);
+        el.text("No " + name + "To Display");
     }
 }
 
@@ -26,11 +26,17 @@ function getData() {
         success: function (data) {
             const tBody = $("#pollen_readings");
             var itemsPerPage = $('#items_per_page').val();
+            var numPages = 1;
             var counter = 1;
 
             $(tBody).empty();
 
             getCount(data.length);
+
+            //avoid division by zero
+            if (itemsPerPage > 0) {
+                numPages = itemsPerPage / data.length();
+            }
 
 
             $.each(data, function (key, item) {
@@ -46,6 +52,7 @@ function getData() {
                 }
                 counter++;
 
+
             });
             pollenReadings = data;
         }
@@ -60,5 +67,6 @@ function formatDate(date) {
 
     return month + "/" + day + "/" + year;
 }
+
 
 
