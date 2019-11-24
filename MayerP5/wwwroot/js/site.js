@@ -18,14 +18,14 @@ $(document).ready(function () {
     getData();
 });
 
-function getData() {
+function getData(itemsPerPage) {
     $.ajax({
         type: "GET",
         url: uri,
         cache: false,
         success: function (data) {
             const tBody = $("#pollen_readings");
-            var itemsPerPage = $('#items_per_page').val();
+            //var itemsPerPage = $('#items_per_page').val();
             var numPages = 1;
             var counter = 1;
 
@@ -39,6 +39,7 @@ function getData() {
             }
 
 
+
             $.each(data, function (key, item) {
                 const tr = $("<tr></tr>")
                     .append($("<td></td>").text(formatDate(item.date)))
@@ -48,6 +49,7 @@ function getData() {
 
                 tr.appendTo(tBody);
                 if (counter == itemsPerPage) {
+                    //break out of for each loop
                     return false;
                 }
                 counter++;
@@ -65,7 +67,7 @@ function formatDate(date) {
     var month = date.slice(5, 7);
     var day = date.slice(8, 10);
 
-    return month + "/" + day + "/" + year;
+    return new Date(month + "/" + day + "/" + year);
 }
 
 
