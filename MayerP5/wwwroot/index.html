@@ -14,15 +14,17 @@
         </h1>
 
         <p id="counter"></p>
+        <p id="number_of_pages"></p>
 
         <div class="well">
             <label>Items per page:</label>
-            <input type="number" value="0" id="items_per_page" />
-            <button class="btn-lg" id="btn_apply" onclick="getData($('items_per_page').val())">Apply</button>
+            <input type="number" value="20" id="items_per_page" />
+            <button class="btn-lg" id="btn_apply" onclick="getData()">Apply</button>
         </div>
 
         <table class="table table-striped" id="pollen_reading_table">
             <tr>
+                <th>ID</th>
                 <th>Date</th>
                 <th>Pollen Name</th>
                 <th>Location</th>

@@ -1,47 +1,51 @@
 ﻿const uri = "api/pollenreadings";
 let pollenReadings = null;
 
-function getCount(data) {
+function displayCount(displayed, dataSetSize) {
     const el = $("#counter");
-    let name = "Pollen Count Reading Displayed";
-    if (data) {
-        if (data > 1) {
+    let name = "Pollen Count Reading";
+    if (displayed) {
+        if (displayed > 1) {
             name = "Pollen Count Readings Displayed";
         }
-        el.text(data + " " + name);
+        el.text(displayed + " " + name);
     } else {
-        el.text("No " + name + "To Display");
+        el.text("No " + name + "s Displayed");
     }
+
+    el.append(" out of " + dataSetSize);
+
 }
 
 $(document).ready(function () {
     getData();
 });
 
-function getData(itemsPerPage) {
+function getData() {
     $.ajax({
         type: "GET",
         url: uri,
         cache: false,
         success: function (data) {
             const tBody = $("#pollen_readings");
-            //var itemsPerPage = $('#items_per_page').val();
+            const dataSetSize = data.length;
+            var itemsPerPage = $("#items_per_page").val();
             var numPages = 1;
             var counter = 1;
 
             $(tBody).empty();
 
-            getCount(data.length);
-
             //avoid division by zero
-            if (itemsPerPage > 0) {
-                numPages = itemsPerPage / data.length();
-            }
+            numPages = getNumberOfPages(itemsPerPage, data.length);
+            $('#number_of_pages').text("Number of Pages: " + numPages);
 
+            data = data.slice(0, itemsPerPage);
 
+            displayCount(data.length, dataSetSize);
 
             $.each(data, function (key, item) {
                 const tr = $("<tr></tr>")
+                    .append($("<td></td>").text(item.id))
                     .append($("<td></td>").text(formatDate(item.date)))
                     .append($("<td></td>").text(item.pollenName))
                     .append($("<td></td>").text(item.location))
@@ -53,8 +57,6 @@ function getData(itemsPerPage) {
                     return false;
                 }
                 counter++;
-
-
             });
             pollenReadings = data;
         }
@@ -70,5 +72,11 @@ function formatDate(date) {
     return new Date(month + "/" + day + "/" + year);
 }
 
-
-
+function getNumberOfPages(itemsPerPage, dataSetSize) {
+    if (itemsPerPage > 0) {
+        return Math.floor(dataSetSize / itemsPerPage);
+    }
+    else {
+        return "Items per page must be positive";
+    }
+}
