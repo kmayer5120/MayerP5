@@ -14,7 +14,6 @@ function displayCount(displayed, dataSetSize) {
     }
 
     el.append(" out of " + dataSetSize);
-
 }
 
 $(document).ready(function () {
@@ -31,13 +30,15 @@ function getData() {
             const dataSetSize = data.length;
             var itemsPerPage = $("#items_per_page").val();
             var numPages = 1;
-            var counter = 1;
+            var currentPage = 1;
 
             $(tBody).empty();
 
             //avoid division by zero
             numPages = getNumberOfPages(itemsPerPage, data.length);
+
             $('#number_of_pages').text("Number of Pages: " + numPages);
+            $('#current_page').text("Current page: " + currentPage);
 
             data = data.slice(0, itemsPerPage);
 
@@ -52,11 +53,6 @@ function getData() {
                     .append($("<td></td>").text(item.readingValue));
 
                 tr.appendTo(tBody);
-                if (counter == itemsPerPage) {
-                    //break out of for each loop
-                    return false;
-                }
-                counter++;
             });
             pollenReadings = data;
         }
@@ -77,6 +73,7 @@ function getNumberOfPages(itemsPerPage, dataSetSize) {
         return Math.floor(dataSetSize / itemsPerPage);
     }
     else {
-        return "Items per page must be positive";
+        alert("Items per page must be positive");
+        return 1;
     }
 }
