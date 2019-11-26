@@ -29,18 +29,20 @@ function getData() {
             const tBody = $("#pollen_readings");
             const dataSetSize = data.length;
             var itemsPerPage = $("#items_per_page").val();
+            var pageNumber = $("#page_number").val();
             var numPages = 1;
             var currentPage = 1;
+            var counter = 1;
 
             $(tBody).empty();
 
-            //avoid division by zero
             numPages = getNumberOfPages(itemsPerPage, data.length);
 
             $('#number_of_pages').text("Number of Pages: " + numPages);
-            $('#current_page').text("Current page: " + currentPage);
 
-            data = data.slice(0, itemsPerPage);
+
+
+            data = data.slice((itemsPerPage * pageNumber) - itemsPerPage, itemsPerPage * pageNumber);
 
             displayCount(data.length, dataSetSize);
 
@@ -50,9 +52,11 @@ function getData() {
                     .append($("<td></td>").text(formatDate(item.date)))
                     .append($("<td></td>").text(item.pollenName))
                     .append($("<td></td>").text(item.location))
-                    .append($("<td></td>").text(item.readingValue));
+                    .append($("<td></td>").text(item.readingValue))
+                    .append($("<td></td>").html(`<button class=btn-primary onclick=displayDetails(${counter}) id=btn_details_${counter}>Details</button>`));
 
                 tr.appendTo(tBody);
+                counter++;
             });
             pollenReadings = data;
         }
@@ -76,4 +80,17 @@ function getNumberOfPages(itemsPerPage, dataSetSize) {
         alert("Items per page must be positive");
         return 1;
     }
+}
+
+function displayDetails(itemNumber) {
+    $.ajax({
+        type: "GET",
+        url: uri,
+        cache: false,
+        success: function (data) {
+            const tBody = $("#pollen_readings");
+            $(tBody).empty();
+            $()
+        }
+    });
 }
