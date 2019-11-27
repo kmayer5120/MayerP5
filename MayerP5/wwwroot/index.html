@@ -15,12 +15,22 @@
             <p id="counter"></p>
             <p id="number_of_pages"></p>
 
-            <div class="well">
-                <label>Page:</label>
-                <input type="number" value="1" id="page_number" />
-                <label>Items per page:</label>
-                <input type="number" value="20" id="items_per_page" />
-                <button class="btn-primary" id="btn_apply" onclick="displayTableData()">Apply</button>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label>Page:</label>
+                        <input class="form-control" style="width:25%;" type="number" value="1" id="page_number" />
+                    </div>
+                    <div class="col-4">
+                        <label>Items per page:</label>
+                        <input class="form-control" style="width:25%;" type="number" value="20" id="items_per_page" />
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="offset-4"> </div>
+                    <button class="btn-primary" id="btn_apply" onclick="displayTableData()">Update Page</button>
+                </div>
             </div>
 
             <table class="table table-striped" id="pollen_reading_table">
@@ -36,7 +46,7 @@
             </table>
 
         </div>
-        <div id="detail_view" >
+        <div id="detail_view">
         </div>
         <div class="modal-footer"><a href="http://data.cabq.gov/airquality/pollen/">Data Source</a></div>
 
