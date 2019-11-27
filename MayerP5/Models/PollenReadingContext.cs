@@ -1,4 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/*
+ * Programmer:  Kyle Mayer
+ * Email:       kmayer1@cnm.edu
+ * Date:        11/22/2019
+ * Program:     P5 Open Data API and SPA 
+ * File:        PollenReadingContext.cs
+*/
+
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
