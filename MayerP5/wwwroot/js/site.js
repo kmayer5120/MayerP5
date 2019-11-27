@@ -17,32 +17,37 @@ function displayCount(displayed, dataSetSize) {
 }
 
 $(document).ready(function () {
-    getData();
+    displayTableData();
 });
 
-function getData() {
+function displayTableData() {
     $.ajax({
         type: "GET",
         url: uri,
         cache: false,
         success: function (data) {
-            const tBody = $("#pollen_readings");
             const dataSetSize = data.length;
+            const tBody = $("#pollen_readings");
             var itemsPerPage = $("#items_per_page").val();
             var pageNumber = $("#page_number").val();
+            var progressBar = $("#progress_bar");
             var numPages = 1;
-            var currentPage = 1;
             var counter = 1;
 
             $(tBody).empty();
+            progressBar.hide();
 
             numPages = getNumberOfPages(itemsPerPage, data.length);
 
             $('#number_of_pages').text("Number of Pages: " + numPages);
 
 
-
+            //slice data to the length and bounds of user input from fields
             data = data.slice((itemsPerPage * pageNumber) - itemsPerPage, itemsPerPage * pageNumber);
+
+            //if (data.length > 3000) {
+            //    progressBar.show();
+            //}
 
             displayCount(data.length, dataSetSize);
 
@@ -53,7 +58,7 @@ function getData() {
                     .append($("<td></td>").text(item.pollenName))
                     .append($("<td></td>").text(item.location))
                     .append($("<td></td>").text(item.readingValue))
-                    .append($("<td></td>").html(`<button class=btn-primary onclick=displayDetails(${counter}) id=btn_details_${counter}>Details</button>`));
+                    .append($("<td></td>").html(`<button class=btn-primary onClick=displayDetails(${counter}) id=btn_details_${counter}>Details</button>`));
 
                 tr.appendTo(tBody);
                 counter++;
@@ -85,12 +90,38 @@ function getNumberOfPages(itemsPerPage, dataSetSize) {
 function displayDetails(itemNumber) {
     $.ajax({
         type: "GET",
-        url: uri,
+        url: `api/pollenreadings/${itemNumber - 1}`,
         cache: false,
         success: function (data) {
-            const tBody = $("#pollen_readings");
-            $(tBody).empty();
-            $()
+            const detailsDiv = $("#detail_view");
+            const tableDiv = $("#table_view");
+
+            //create query string for a google search
+            var googleSearchURL = "http://www.google.com/search?q=";
+            var searchTerms = data.pollenName.split(" ").join("+");
+            googleSearchURL += searchTerms + "+allergy";
+            console.log(googleSearchURL);
+
+
+            detailsDiv.append("<h2>Details</h2>");
+            detailsDiv.append(`<h3>Pollen Reading ID: ${data.id}`)
+            detailsDiv.append(`<p>Date: ${formatDate(data.date)}</p>`);
+            detailsDiv.append(`<p>Pollen type: ${data.pollenName}</p>`);
+            //handle weird misspelling of Unidentified in dataset 
+            //and only show link if pollen name is indentified
+            if (!(data.pollenName == "Unidentied")) {
+                detailsDiv.append(`<p><a href="${googleSearchURL}">More information on ${data.pollenName}</a></p>`)
+            }
+            detailsDiv.append(`<p>Reading: ${data.readingValue} pollen/spores per cubic meter </p>`);
+            detailsDiv.append(`<p>Pollen type: ${data.pollenName}</p>`);
+            detailsDiv.append(`<p>Collected at: ${data.location}</p>`);
+
+            
+            tableDiv.hide();
+            detailsDiv.show();
+
+            pollenReadings = data;
         }
     });
 }
+
