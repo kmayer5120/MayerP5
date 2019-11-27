@@ -3,52 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Daily Pollen Count Readings Albuquerque, NM</title>
-    <link rel="stylesheet" href="css/bootstrap-flatly.css" />
-
-
+    <link rel="stylesheet" href="css/bootstrap.css" />
 </head>
 <body>
-    <div class="container" id="table_view">
-        <h1 class="page-header">
-            Daily Pollen Readings Albuquerque, NM
-        </h1>
+    <div class="container">
+        <div id="table_view">
+            <h1 class="page-header">
+                Daily Pollen Readings Albuquerque, NM
+            </h1>
 
-        <p id="counter"></p>
-        <p id="number_of_pages"></p>
+            <p id="counter"></p>
+            <p id="number_of_pages"></p>
 
-        <div class="well">
-            <label>Page:</label>
-            <input type="number" value="1" id="page_number" />
-            <label>Items per page:</label>
-            <input type="number" value="20" id="items_per_page" />
-            <button class="btn-primary" id="btn_apply" onclick="displayTableData()">Apply</button>
+            <div class="well">
+                <label>Page:</label>
+                <input type="number" value="1" id="page_number" />
+                <label>Items per page:</label>
+                <input type="number" value="20" id="items_per_page" />
+                <button class="btn-primary" id="btn_apply" onclick="displayTableData()">Apply</button>
+            </div>
+
+            <table class="table table-striped" id="pollen_reading_table">
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Pollen Name</th>
+                    <th>Location</th>
+                    <th>Pollen Count</th>
+                    <th></th>
+                </tr>
+                <tbody id="pollen_readings"></tbody>
+            </table>
+
         </div>
+        <div id="detail_view" >
+        </div>
+        <div class="modal-footer"><a href="http://data.cabq.gov/airquality/pollen/">Data Source</a></div>
 
-        <table class="table table-striped" id="pollen_reading_table">
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Pollen Name</th>
-                <th>Location</th>
-                <th>Pollen Count</th>
-                <th></th>
-            </tr>
-            <tbody id="pollen_readings"></tbody>
-        </table>
 
     </div>
-    <div class="container" id="detail_view" hidden>
-    </div>
-
-
-    <div class="container panel-footer"><a href="http://data.cabq.gov/airquality/pollen/">Data Source</a></div>
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="js/site.js"></script>
     <script src="js/jquery-3.4.1.js"></script>
 </body>

@@ -103,7 +103,7 @@ function displayDetails(id) {
             detailsDiv.append(`<p>Reading: ${data.readingValue} pollen/spores per cubic meter </p>`);
             detailsDiv.append(`<p>Pollen type: ${data.pollenName}</p>`);
             detailsDiv.append(`<p>Collected at: ${data.location}</p>`);
-            detailsDiv.append('<button class="btn-lg" onclick="displayTableData()">Back to Table View</button>');
+            detailsDiv.append('<button class="btn-primary" onclick="displayTableData()">Back to Table View</button>');
 
             //toggle visibility
             tableDiv.hide();
