@@ -91,19 +91,19 @@ function displayDetails(id) {
             googleSearchURL += searchTerms + "+allergy";
             console.log(googleSearchURL);
 
-            detailsDiv.append("<h2>Details</h2>");
-            detailsDiv.append(`<h3>Pollen Reading ID: ${data.id}`)
-            detailsDiv.append(`<p>Date: ${formatDate(data.date)}</p>`);
-            detailsDiv.append(`<p>Pollen type: ${data.pollenName}</p>`);
+            detailsDiv.append("<div class='jumbotron'><h1>Details</h1></div>")
+                .append(`<h3>Pollen Reading ID: ${data.id}`)
+                .append(`<p>Date: ${formatDate(data.date)}</p>`)
+                .append(`<p>Pollen type: ${data.pollenName}</p>`)
             //handle weird misspelling of Unidentified in dataset 
             //and only show link if pollen name is indentified
             if (!(data.pollenName == "Unidentied")) {
-                detailsDiv.append(`<p><a href="${googleSearchURL}">More information on ${data.pollenName}</a></p>`)
+                detailsDiv.append(`<p><a href="${googleSearchURL}">More information on ${data.pollenName}</a></p>`);
             }
-            detailsDiv.append(`<p>Reading: ${data.readingValue} pollen/spores per cubic meter </p>`);
-            detailsDiv.append(`<p>Pollen type: ${data.pollenName}</p>`);
-            detailsDiv.append(`<p>Collected at: ${data.location}</p>`);
-            detailsDiv.append('<button class="btn-primary" onclick="displayTableData()">Back to Table View</button>');
+            detailsDiv.append(`<p>Reading: ${data.readingValue} pollen/spores per cubic meter </p>`)
+                .append(`<p>Pollen type: ${data.pollenName}</p>`)
+                .append(`<p>Collected at: ${data.location}</p>`)
+                .append('<button class="btn-primary" onclick="displayTableData()">Back to Table View</button>');
 
             //toggle visibility
             tableDiv.hide();
